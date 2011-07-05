@@ -28,7 +28,14 @@ class PySpamStegTests(unittest.TestCase):
 
     def test_invalid_read(self):
         self.assertEqual(pyspamsteg.read(test_ct02), None)
-    
+
+    def test_valid_encode(self):
+        message = pyspamsteg.encode(test_pt00)
+        self.assertEqual(pyspamsteg.decode(message), test_pt00)
+
+    def test_valid_message_build(self):
+        message = pyspamsteg.create(test_pt00)
+        self.assertEqual(pyspamsteg.read(message), test_pt00)
 
 if __name__ == '__main__':
     suite   = unittest.TestSuite()
