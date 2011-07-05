@@ -52,3 +52,9 @@ def decode(body):
         plaintext += current_byte
 
     return plaintext
+
+def create(message):
+    return encode(message)
+
+def encode(message):
+    return ''
