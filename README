@@ -1,0 +1,19 @@
+pyspamsteg
+author: kyle isom <coder@kyleisom.net>
+
+hide / reveal steganographic messages in spam
+
+usage:
+    pyspamsteg -r <message file>
+        reads a message from file and outputs it to stdout
+
+    pyspamsteg -w <message file> <file>
+        reads a message from file and outputs to file
+
+    a dash ('-') may be substituted for a filename to output from stdout
+    or input from stdin.
+
+how does this work?
+    http://programmingpraxis.com/2011/06/10/steganography/
+
+
