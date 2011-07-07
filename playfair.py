@@ -109,3 +109,11 @@ class PlayFair:
                 b.y += 1
                 ciphertext += key[ get_pos( a.get() ) ]
                 ciphertext += key[ get_pos( b.get() ) ]
+            elif a.x == b.x:
+                a.x += 1
+                b.y += 1
+                ciphertext += key[ get_pos( a.get() ) ]
+                ciphertext += key[ get_pos( b.get() ) ]
+
+
+        return ciphertext
