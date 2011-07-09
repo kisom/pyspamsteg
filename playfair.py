@@ -93,7 +93,7 @@ class PlayFair:
 
         return x + (y * self.GRID_Y)
         
-    def __init__(self, pad_char = 'X', keyspace = DEF_KEYSPACE8, rows = 8, cols = 8):
+    def __init__(self, rows = 8, cols = 8, keyspace = DEF_KEYSPACE8, pad_char = 'X'):
         """
         The PlayFair instance should be initialised with the keyspace and number of
         rows and columns. By default, uses the 8x8 grid. The padding character may
@@ -101,7 +101,7 @@ class PlayFair:
         """
         self.GRID_X = cols
         self.GRID_Y = rows
-        
+        self.pad_char = pad_char
         self.keyspace = keyspace
         
     def get_digrams(self, message):
