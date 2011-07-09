@@ -21,22 +21,49 @@ test_ct02  = 'this is not a valid hidden message'
 class PySpamStegTests(unittest.TestCase):
     
     def test_valid_decode(self):
+        """
+        Test to ensure the decoding of messages works. Decoding is the process of
+        taking the binary-encoded words and transforming them into a character
+        sequence. No encryption is used here.
+        """
         self.assertEqual(pyspamsteg.decode(test_ct00), test_pt00)
 
     def test_valid_read(self):
+        """
+        Test case to ensure that a message can be read properly. This implicitly
+        tests the decode function as well. This tests just the read and decode
+        functions without testing the cipher suite.
+        """
         self.assertEqual(pyspamsteg.read(test_ct01), test_pt01)
+
     def test_invalid_read(self):
+        """
+        Test case to ensure proper handling of improperly-formatted messages. Does not
+        use the cipher suite.
+        """
         self.assertEqual(pyspamsteg.read(test_ct02), None)
 
     def test_valid_encode(self):
+        """
+        Test case to verify the proper encoding of messages: taking a character
+        sequence and converting that to binary-encoded words. Does not use encryption.
+        """
         message = pyspamsteg.encode(test_pt00)
         self.assertEqual(pyspamsteg.decode(message), test_pt00)
 
     def test_valid_message_build(self):
+        """
+        Test case for the build function. Build is the opposite of read, and the output
+        is a properly-formatted message body. Does not use encryption.
+        """
         message = pyspamsteg.create(test_pt00)
         self.assertEqual(pyspamsteg.read(message), test_pt00)
 
     def test_build(self):
+        """
+        Test case to verify proper build and read of a steganograpic message with
+        PlayFair encryption.
+        """
         message = 'testing pyspamsteg'
         passphrase = 'pyspamsteg'
         
@@ -46,6 +73,9 @@ class PySpamStegTests(unittest.TestCase):
         self.assertEquals( pt, message )
 
     def test_steg_vector(self):
+        """
+        Test case validating the test vector from the site. Uses PlayFair encryption.
+        """
         expected_pt = 'Programming Praxis'
         passphrase  = "President Obama's visit to a Chrysler plant in Toledo, "
         passphrase += "Ohio, on Friday was the culmination of a campaign to "
