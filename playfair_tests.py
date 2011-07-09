@@ -14,7 +14,7 @@ class PlayFairTests(unittest.TestCase):
         """
         Test basic 5x5 PlayFair grid via the example on Programming Praxis.
         """
-        P = playfair.PlayFair(playfair.DEF_KEYSPACE5, cols = 5, rows = 5)
+        P = playfair.PlayFair(keyspace = playfair.DEF_KEYSPACE5, cols = 5, rows = 5)
         message = 'PROGRAMMING PRAXIS' 
         key = P.make_key( 'PLAYFAIR ')
         ct  = P.encrypt( 'PROGRAMMING PRAXIS', key )
