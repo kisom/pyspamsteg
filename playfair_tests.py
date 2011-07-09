@@ -11,6 +11,9 @@ import unittest
 class PlayFairTests(unittest.TestCase):
 
     def test_playfair5(self):
+        """
+        Test basic 5x5 PlayFair grid via the example on Programming Praxis.
+        """
         P = playfair.PlayFair(playfair.DEF_KEYSPACE5, cols = 5, rows = 5)
         message = 'PROGRAMMING PRAXIS' 
         key = P.make_key( 'PLAYFAIR ')
@@ -24,6 +27,10 @@ class PlayFairTests(unittest.TestCase):
         self.assertEquals( pt, expected_pt )
 
     def test_playfair(self):
+        """
+        Test 8x8 PlayFair grid key generation via the example on Programming
+        Praxis.
+        """
         passphrase  = "President Obama's visit to a Chrysler plant in Toledo, "
         passphrase += "Ohio, on Friday was the culmination of a campaign to "
         passphrase += "portray the auto bailouts as a brilliant success with "
