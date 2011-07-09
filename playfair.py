@@ -187,6 +187,11 @@ class PlayFair:
         """
         Pretty print the key in a grid format, i.e. for displaying / using by end
         users.
+
+        Arguments:
+            new_key: boolean flag indicating whether a new key should begenerated
+            passphrase: used with new_key, the passphrase to generate a key from
+            key: alternatively an existing key may be passed in
         """
         if passphrase and new_key:
             key = self.make_key(passphrase)
@@ -196,7 +201,7 @@ class PlayFair:
         for y in range(self.GRID_Y):
             row = ''
             for x in range(self.GRID_X):
-                row += key [ self.get_char(x, y) ] + ' '
+                row += key [ self.get_pos(x, y) ] + ' '
             print row
 
     def cipher( self, message, key, encrypt = True ):
