@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# author: kyle isom <coder@kylesiom.net>
+# license: public domain / ISC dual-license
+#
 # implementation of the playfair cipher
 
 import struct
@@ -192,7 +196,7 @@ class PlayFair:
             new_key: boolean flag indicating whether a new key should begenerated
             passphrase: used with new_key, the passphrase to generate a key from
             key: alternatively an existing key may be passed in
-        """
+        """x
         if passphrase and new_key:
             key = self.make_key(passphrase)
         elif not key:
