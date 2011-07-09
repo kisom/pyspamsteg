@@ -221,8 +221,12 @@ class PlayFair:
         # this is the resulting output; ciphertext if encrypt, plaintext if not encrypt
         result = ''
 
-        # set the operation: +1 if encrypting, -1 if decrypting. documented further
+        # set the shift: +1 if encrypting, -1 if decrypting. documented further
         # in the actual cipher section below.
+        if encrypt:
+            shift = 1
+        else:
+            shift = -1
 
         # determine the maximum size of the grid for wrapping purposes.
         grid = self.GRID_X * self.GRID_Y
@@ -242,16 +246,16 @@ class PlayFair:
             #  pairwise by the letters to their immediate right, wrapping around to the
             #  left of the row if needed.
             if a.y == b.y:
-                c.x += 1
-                d.x += 1
+                c.x += shift
+                d.x += shift
 
             # rule 2:
             #  If the two letters of the digram are in the same column, they are
             #  replaced pairwise by the letters immediately below, wrapping around to
             #  the top of the column if needed.
             elif a.x == b.x:
-                c.y += 1
-                d.y += 1
+                c.y += shift
+                d.y += shift
 
             # rule 3:
             #  Otherwise, the first letter of the digram is replaced by the letter in
