@@ -7,17 +7,47 @@
 #     http://programmingpraxis.com/2011/06/10/steganography/
 
 import math
+import playfair
 
-def read(message):
+debug = False
+charsize = 7
+cryptf = playfair.PlayFair
+
+def TRACE(*messages):
+    if debug:
+        for message in messages:
+            print message,
+        print
+    else:
+        return
+
+def set_charsize(new_size):
+    global charsize
+
+    charsize = new_size
+
+def read( message, passphrase = None ):
     message.replace('\r', '')
     message = message.strip().split('\n\n')
 
     if len(message) < 2:
+        TRACE( '[!] invalid message length' )
         return None
     
-    message = [ token for token in message[1:] if token.strip() ]
-    message = ' '.join(message)
-    return decode(message)
+    message = [ token.strip() for token in message[1:] if token.strip('\n') ]
+    message = ' '.join(message).replace( '\n', ' ' )
+
+    message = decode( message )
+
+    if not None == passphrase:
+        TRACE( '[+] decrypting with PlayFair' )
+        P   = cryptf()
+        key = P.make_key( passphrase )
+        message = P.decrypt( message, key )
+    else:
+        TRACE( '[!] *not* encrypting' )
+    
+    return message
 
 
 def decode(body):
@@ -28,9 +58,10 @@ def decode(body):
     byte_position = 0 # current position in the current byte
     bit_position = 0  # current position in the bit stream
 
-    tokens  = body.split( ' ' )
-    bits    = len(tokens)
-    bytes  = int(math.ceil( bits / 8.0 ))
+    tokens  = body.split()
+    bits    = len(tokens) 
+    bytes  = int(math.ceil( 1.0 * bits / charsize ))
+    TRACE( bytes )
 
     plaintext = '' # the eventual decrypted message
 
@@ -38,22 +69,26 @@ def decode(body):
 
         current_byte = 0x00
         
-        for byte_position in range(0, 8):
+        for byte_position in range(0, charsize):
 
             # deal with partially-filled bytes
-            bit_position = byte * 8 + byte_position
+            bit_position = byte * charsize + byte_position
             if bit_position == bits:
                 break
 
             if len(tokens[bit_position]) % 2:
-                current_byte = current_byte | ( 1 << 7 - byte_position )
+                TRACE( tokens[bit_position], '->', '1' )
+                current_byte = current_byte | ( 1 << (charsize - 1) - byte_position )
+            else:
+                TRACE( tokens[bit_position], '->', '0' )
 
         current_byte = chr(current_byte)
+        TRACE( '%d: %s' % (byte, current_byte) )
         plaintext += current_byte
 
     return plaintext
 
-def create(message):
+def create( message, passphrase = None ):
     return encode(message)
 
 def encode(message):
